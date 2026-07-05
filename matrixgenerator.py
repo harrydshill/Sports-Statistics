@@ -11,7 +11,7 @@ lambda1 = float(input("Enter lambda for first Poisson distribution: "))
 lambda2 = float(input("Enter lambda for second Poisson distribution: "))
 
 # --- x values from 0 to n (for plotting) ---
-x_plot = np.arange(0, n + 1)
+x_plot = np.arange(0, n)
 
 # --- Poisson PMF for plotting ---
 pmf1_plot = np.array([(math.exp(-lambda1) * (lambda1 ** k)) / math.factorial(k) for k in x_plot])
