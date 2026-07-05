@@ -1,6 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import math
+import os
 
 # --- Fixed n (you can change this to any value) ---
 n = 10
@@ -52,6 +53,8 @@ pmf2_matrix = np.array([(math.exp(-lambda2) * (lambda2 ** k)) / math.factorial(k
 joint_matrix = np.outer(pmf2_matrix, pmf1_matrix)   # shape (n, n)
 
 # --- Always write the CSV (overwrites if exists, creates if not) ---
-filename = "goalsjointpmfmatrix.csv"
+folder = "outputs"
+os.makedirs(folder, exist_ok=True)                     # create folder if missing
+filename = os.path.join(folder, "jointpmfmatrix.csv")         # path: outputs/outputs.csv
 np.savetxt(filename, joint_matrix, delimiter=",", fmt="%.10f")
-print(f"\nWritten {n}x{n} joint probability matrix to '{filename}' (overwritten if it existed).")
+print(f"\nWritten {n}x{n} joint probability matrix to '{filename}'.")
