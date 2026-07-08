@@ -1,0 +1,25 @@
+Model:
+
+> Writeup of model and referencing to papers in latex
+> Implementation of state-space or otherwise mechanism to allow time variance
+
+Acquiring attack, defence, low score and home advantage parameters:
+
+> Script to be written to analyse historic data to get parameters by MLEs
+> Model to be run and evaluated against historic data (and betting odds) to verify efficacy
+> Possible ML integrations to calculate these parameters
+ - Generally an overview of parameter acqusition is desperatley needed
+
+Betting infrastructure:
+
+> Script needed to acquire present rates and calculate matrix
+	> This script also needs to determine the most suitable bets 
+	> Kelly stuff needs to be evaluated
+> Study to be performed to evaluate current market state and select sufficiently safe,
+  i.e. inefficient, market to target. Deadline is August. 
+> Generally need to look into the types of bets that we can place (for example, are
+  modern bets fixed a week prior to a fixture as suggested in the 1997 paper?)
+
+
+All of this should really be migrated to latex	
+
