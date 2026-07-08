@@ -68,6 +68,14 @@ def info_plots(x_plot, pmf1_plot, pmf2_plot, lambda1, lambda2, n, matrix, title)
             val = matrix[i, j]
             ax.text(j, i, f'{val:.3g}', ha='center', va='center', color='white', fontsize=8)
     ax.set_title(title)
+    tail = 1.0 - np.sum(matrix)
+    ax.text(0.95, -0.1, f'Tail = {tail:.3g}',
+            transform=ax.transAxes,
+            ha='right', va='bottom',
+            fontsize=8, color='white',
+            bbox=dict(facecolor='black', alpha=0.5, edgecolor='none'))
+    
+    ax.set_title(title, y=-0.15, fontsize=12)
     plt.tight_layout()
     plt.show()
         
