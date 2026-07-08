@@ -72,7 +72,7 @@ def info_plots(x_plot, pmf1_plot, pmf2_plot, lambda1, lambda2, n, matrix, title)
     plt.show()
         
 n = 10
-lsc_coefficient = 0.5
+lsc_coefficient = -0.1
 
 lambda1 = float(input("Enter λ for first Poisson distribution: "))
 lambda2 = float(input("Enter λ for second Poisson distribution: "))
