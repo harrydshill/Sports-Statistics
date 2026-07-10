@@ -19,6 +19,7 @@ Betting infrastructure:
   i.e. inefficient, market to target. Deadline is August. 
 > Generally need to look into the types of bets that we can place (for example, are
   modern bets fixed a week prior to a fixture as suggested in the 1997 paper?)
+> Select a/some REST APIs
 
 
 All of this should really be migrated to latex	
