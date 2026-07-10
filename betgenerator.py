@@ -1,19 +1,15 @@
 import os
 import glob
 import numpy as np
+import csv
 
-def load_model():
-    path = "outputs/lowscorecorrectedjointpmfmatrix.csv"
-    if not os.path.exists(path):
-        raise FileNotFoundError(f"Model file not found: {path}")
+def load_model(path):
     matrix = np.loadtxt(path, delimiter=",")
     print(f"Loaded model matrix: shape {matrix.shape}")
     return matrix
 
-def load_odds(folder="inputdata"):
+def load_odds(folder):
     files = glob.glob(os.path.join(folder, "*.csv"))
-    if not files:
-        raise FileNotFoundError(f"No CSV files found in folder: {folder}")
     odds = {}
     for f in files:
         name = os.path.basename(f).replace(".csv", "")
@@ -33,7 +29,7 @@ def rank_bets(model, odds):
                 edge = difference_matrix[y, x]
                 all_bets.append({
                     "bookmaker": bookie,
-                    "result": f"{x}-{y}",
+                    "score": f"{x}-{y}",
                     "edge": edge,
                     "model_prob": model[y, x],
                     "odds_prob": odds_matrix[y, x]
@@ -42,12 +38,20 @@ def rank_bets(model, odds):
     all_bets.sort(key=lambda bet: bet["edge"], reverse=True)
     return all_bets
 
-def save_ranked_bets(all_bets, folder="outputs", filename="ranked_bets.csv"):
-    os.makedirs(folder, exist_ok=True)
-    file_path = os.path.join(folder, filename)
-    
-    df = pd.DataFrame(all_bets)
-    df.to_csv(file_path, index=False)
-    print(f"\nSaved ranked bets to: {file_path}")
-    print(f"Total bets ranked: {len(all_bets)}")
-    return df
+def save_ranked_bets(all_bets, filepath):
+    dirname = os.path.dirname(filepath)
+    if dirname:
+        os.makedirs(dirname, exist_ok=True)
+    with open(filepath, 'w', newline='') as f:
+        if len(all_bets) > 0:
+            fieldnames = all_bets[0].keys()
+            writer = csv.DictWriter(f, fieldnames=fieldnames)
+            writer.writeheader()
+            writer.writerows(all_bets)
+    return all_bets
+
+prediction_matrix = load_model("outputs/lowscorecorrectedjointpmfmatrix.csv")
+odds_dict = load_odds("inputdata")
+ranked_bets = rank_bets(prediction_matrix, odds_dict)
+save_ranked_bets(ranked_bets, "outputs/ranked_bets.csv")
+print(ranked_bets)

@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 import math
 import os
 import sys
+import pandas as pd
 from matplotlib.colors import LogNorm, LinearSegmentedColormap
 
 DEBUG = True
@@ -32,10 +33,9 @@ def low_score_correction(matrix, lambda1, lambda2, rho):
     
     return corrected
 
-def save_joint_matrix(matrix, folder, filename):
-    os.makedirs(folder, exist_ok=True)
-    full_path = os.path.join(folder, filename)
-    np.savetxt(full_path, matrix, delimiter=",", fmt="%.10f")
+def save_joint_matrix(matrix, filepath):
+    os.makedirs(os.path.dirname(filepath), exist_ok=True)
+    np.savetxt(filepath, matrix, delimiter=",", fmt="%.10f")
         
 def info_plots(x_plot, pmf1_plot, pmf2_plot, lambda1, lambda2, n, matrix, title):
     #plt.plot(x_plot, pmf1_plot, 'o-', label=f'Poisson 1 (λ={lambda1})', markersize=5)
@@ -87,16 +87,11 @@ lambda2 = float(input("Enter λ for second Poisson distribution: "))
 
 x_plot, pmf1_plot, pmf2_plot, joint_matrix = compute_pmfs_and_joint(lambda1, lambda2, n)
 
-folder = "outputs"
-filename = "jointpmfmatrix.csv"
-save_joint_matrix(joint_matrix, folder, filename)
-
+save_joint_matrix(joint_matrix, "outputs/jointpmfmatrix.csv")
 
 lsc_joint_matrix = low_score_correction(joint_matrix, lambda1, lambda2, lsc_coefficient)
 
-folder = "outputs"
-filename = "lowscorecorrectedjointpmfmatrix.csv"
-save_joint_matrix(lsc_joint_matrix, folder, filename)
+save_joint_matrix(lsc_joint_matrix, "outputs/lowscorecorrectedjointpmfmatrix.csv")
 
 if DEBUG:
     info_plots(x_plot, pmf1_plot, pmf2_plot, lambda1, lambda2, n, joint_matrix, 'Joint PMF Matrix')
