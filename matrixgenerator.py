@@ -6,6 +6,8 @@ import sys
 import pandas as pd
 from matplotlib.colors import LogNorm, LinearSegmentedColormap
 
+#Property of LaunchEHD Limited 2026
+
 DEBUG = True
 
 def compute_pmfs_and_joint(lambda1, lambda2, n):
